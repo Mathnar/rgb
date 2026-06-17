@@ -29,6 +29,7 @@ class _AuthScreenState extends State<AuthScreen> {
     });
     try {
       await action();
+      if (!mounted) return;
       if (_nick.text.trim().isNotEmpty) {
         await context.read<AuthService>().setDisplayName(_nick.text);
       }
