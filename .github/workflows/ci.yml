@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  analyze-and-test:
+    name: Analyze & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      # Generate the native android/ios projects (not committed to the repo).
+      - name: Flutter create (platform scaffolding)
+        run: flutter create . --org com.yourcompany --project-name rgb --platforms=android,ios
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Verify formatting
+        continue-on-error: true
+        run: dart format --output=none --set-exit-if-changed lib test
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test

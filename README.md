@@ -149,6 +149,22 @@ Everything you'd want to balance is in `lib/game/game_config.dart`: fall speed,
 speed ramp, spawn rate, combo frequency, hit-window forgiveness, point values.
 Tweak, hot-reload, repeat.
 
+## 5b. App icon & splash (already designed)
+
+A neon "RGB" icon + matching splash are in `assets/branding/`
+(`icon_source.png`, `icon_foreground.png`, `splash_logo.png`). Generate the
+native icon/splash assets for both platforms with:
+
+```bash
+dart run flutter_launcher_icons
+dart run flutter_native_splash:create
+```
+
+Re-run those whenever you tweak the source art. The config lives in
+`pubspec.yaml` (`flutter_launcher_icons:` / `flutter_native_splash:`). To
+redesign the art, edit and re-run `tools/gen_branding.py` (requires Pillow:
+`pip install Pillow`).
+
 ---
 
 ## 6. Build & publish
