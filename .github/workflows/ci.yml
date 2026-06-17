@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  analyze-and-test:
+    name: Analyze & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      # Generate the native android/ios projects (not committed to the repo).
+      - name: Flutter create (platform scaffolding)
+        run: flutter create . --org com.yourcompany --project-name rgb --platforms=android,ios
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Style/deprecation hints (e.g. withOpacity) are reported but don't fail
+      # the build; real errors and warnings still do.
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos
+
+      - name: Run tests
+        run: flutter test
