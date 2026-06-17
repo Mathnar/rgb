@@ -1,5 +1,4 @@
 import 'dart:io' show Platform;
-import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 /// AdMob integration: banner (home), interstitial (game over), rewarded
@@ -43,7 +42,7 @@ class AdsService {
       adUnitId: _unit('banner'),
       size: AdSize.banner,
       request: const AdRequest(),
-      listener: const BannerAdListener(),
+      listener: BannerAdListener(),
     )..load();
   }
 
